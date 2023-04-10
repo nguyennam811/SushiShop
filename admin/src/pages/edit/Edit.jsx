@@ -11,9 +11,10 @@ import { getAllUser } from "../../redux/apiRequest";
 const Edit = () => {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
-  // const user = useSelector((state) => state.auth.login?.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // const user = useSelector((state) => state.auth.login?.currentUser);
   //   useEffect(() => {
   //     if (!user) {
   //       navigate("/login");
@@ -23,10 +24,20 @@ const Edit = () => {
   //     }
   //   });
 
+  const user = useSelector((state) => state.auth.login?.currentUser);
+    useEffect(() => {
+      if (!user) {
+        navigate("/login");
+      }
+      if (user?.accessToken) {
+        getAllUser(user?.accessToken, dispatch);
+      }
+    });
+
   useEffect(() => {
     const fetchproducts = async () => {
       const { data } = await axios.get(
-        `https://server-api-guke.onrender.com/api/products/${id}`
+        `http://localhost:3002/api/products/${id}`
       );
       setProducts(data);
     };
@@ -36,7 +47,7 @@ const Edit = () => {
   const updateProduct = (_id) => async () => {
     try {
       await axios.put(
-        `https://server-api-guke.onrender.com/api/update/${_id}`,
+        `http://localhost:3002/api/update/${_id}`,
         products
       );
       Swal.fire({
@@ -98,13 +109,15 @@ const Edit = () => {
           onChange={handleChange}
           value={products.category || ""}
         >
-          <option>vietnam</option>
-          <option>china</option>
-          <option>korean</option>
-          <option>japan</option>
-          <option>european</option>
-          <option>drink</option>
-          <option>order</option>
+          <option>Nare sushi</option>
+          <option>Inari sushi</option>
+          <option>Nigiri sushi</option>
+          <option>Temari sushi</option>
+          <option>Futomaki</option>
+          <option>Hosomaki</option>
+          <option>Temaki</option>
+          <option>Oshi sushi</option>
+          <option>Chirashi sushi</option>
         </select>
       </div>
       <div class="mb-3 col-md-5 mx-auto">
@@ -121,7 +134,7 @@ const Edit = () => {
         />
       </div>
       <div class="mb-3 col-md-1 mx-auto">
-        <button onClick={updateProduct(products._id)}>Them</button>
+        <button type="button" class="btn btn-outline-dark" onClick={updateProduct(products._id)}>Lưu Sản Phẩm</button>
       </div>
     </div>
   );

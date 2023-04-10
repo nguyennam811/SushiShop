@@ -19,6 +19,15 @@ const Upload = () => {
   //     getAllUser(user?.accessToken, dispatch);
   //   }
   // });
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+    if (user?.accessToken) {
+      getAllUser(user?.accessToken, dispatch);
+    }
+  });
+
   const [image, setImage] = useState({});
   console.log(image.url);
   function openWidget() {
@@ -54,7 +63,7 @@ const Upload = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://server-api-guke.onrender.com/api/import/singleproduct",
+        "http://localhost:3002/api/import/singleproduct",
         dataPush
       );
       swal({
@@ -107,13 +116,15 @@ const Upload = () => {
           onChange={handleChange}
         >
           <option value="">Choose...</option>
-          <option>vietnam</option>
-          <option>china</option>
-          <option>korean</option>
-          <option>japan</option>
-          <option>european</option>
-          <option>drink</option>
-          <option>order</option>
+          <option>Nare sushi</option>
+          <option>Inari sushi</option>
+          <option>Nigiri sushi</option>
+          <option>Temari sushi</option>
+          <option>Futomaki</option>
+          <option>Hosomaki</option>
+          <option>Temaki</option>
+          <option>Oshi sushi</option>
+          <option>Chirashi sushi</option>
         </select>
       </div>
       <div class="mb-3 col-md-5 mx-auto">
@@ -130,8 +141,8 @@ const Upload = () => {
       <div class="mb-3 col-md-5 mx-auto">
         <button onClick={() => openWidget()}>Upload picture</button>
       </div>
-      <div class="mb-3 col-md-1 mx-auto">
-        <button onClick={handleSubmit}>Them</button>
+      <div class="mb-3 col-md-2 mx-auto">
+        <button type="button" class="btn btn-outline-dark" onClick={handleSubmit}>Thêm Sản Phẩm</button>
       </div>
     </div>
   );

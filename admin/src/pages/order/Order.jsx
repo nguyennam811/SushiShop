@@ -10,6 +10,7 @@ const Order = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   // useEffect(() => {
   //   if (!user) {
   //     navigate("/login");
@@ -18,6 +19,14 @@ const Order = () => {
   //     getAllUser(user?.accessToken, dispatch);
   //   }
   // });
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+    if (user?.accessToken) {
+      getAllUser(user?.accessToken, dispatch);
+    }
+  });
 
   useEffect(() => {
       const fetchproducts = async() => {

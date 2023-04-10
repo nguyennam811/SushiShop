@@ -8,7 +8,9 @@ import { logOutSuccess } from "../../redux/authSlice";
 const Navbar = () => {
   // Login
   // const user = useSelector((state) => state.auth.login.currentUser);
-  const user = true;
+  const user = useSelector((state) => state.auth.login.currentUser);
+
+  // const user = true;
   const accessToken = user?.accessToken;
   const id = user?._id;
   const dispatch = useDispatch();

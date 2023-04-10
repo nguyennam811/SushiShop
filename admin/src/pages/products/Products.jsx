@@ -22,9 +22,18 @@ const Products = () => {
   //   }
   // });
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+    if (user?.accessToken) {
+      getAllUser(user?.accessToken, dispatch);
+    }
+  });
+
+  useEffect(() => {
     const fetchproducts = async () => {
       const { data } = await axios.get(
-        "https://server-api-guke.onrender.com/api/products"
+        "http://localhost:3002/api/products"
       );
       setProducts(data);
     };
@@ -34,7 +43,7 @@ const Products = () => {
   const deleteProduct = (id) => async () => {
     try {
       await axios.delete(
-        `https://server-api-guke.onrender.com/api/delete/${id}`
+        `http://localhost:3002/api/delete/${id}`
       );
       Swal.fire({
         position: "center",

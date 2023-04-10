@@ -46,8 +46,8 @@ const Checkout = () => {
       total: total
     },
     validationSchema: Yup.object({
-      fullName: Yup.string().required("Không được bỏ chống ô này").min(4, ("Vui lòng nhập họ và tên")),
-      phoneNumber: Yup.string().required("Không được bỏ chống ô này").matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[./[0-9]*$/, "Vui lòng nhập đúng số điện thoại"),
+      fullName: Yup.string().required("Không được bỏ trống ô này").min(4, ("Vui lòng nhập họ và tên")),
+      phoneNumber: Yup.string().required("Không được bỏ trống ô này").matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[./[0-9]*$/, "Vui lòng nhập đúng số điện thoại"),
       city: Yup.string().required("Vui lòng chọn tỉnh"),
       address: Yup.string().required("Không được bỏ trống ô này"),
       district: Yup.string().required("Chọn huyện"),

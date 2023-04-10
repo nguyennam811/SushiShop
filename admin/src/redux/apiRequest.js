@@ -6,7 +6,7 @@ import { getUserFailed, getUserStart, getUserSuccess } from './userSlice';
 export const loginUser = async(user, dispatch, navigate) => {
     dispatch(loginStart());
     try{
-        const res = await axios.post("https://server-api-guke.onrender.com/admin/auth/login", user);
+        const res = await axios.post("http://localhost:3002/admin/auth/login", user);
         dispatch(loginSuccess(res.data));
         navigate("/");
     } catch(err) {
@@ -17,7 +17,7 @@ export const loginUser = async(user, dispatch, navigate) => {
 export const registerUser = async(user, dispatch, navigate) =>{
     dispatch(registerStart());
     try{
-        await axios.post("https://server-api-guke.onrender.com/admin/auth/register", user);
+        await axios.post("http://localhost:3002/admin/auth/register", user);
         dispatch(registerSuccess());
         navigate("/login");
     } catch(err){
@@ -33,7 +33,7 @@ export const registerUser = async(user, dispatch, navigate) =>{
 export const logOut = async(dispatch, id, navigate, accessToken, axiosJWT) => {
     dispatch(logOutStart());
     try{
-        await axiosJWT.post("https://server-api-guke.onrender.com/admin/auth/logout",id,{
+        await axiosJWT.post("http://localhost:3002/admin/auth/logout",id,{
             headers: {token: `Bearer ${accessToken}`}
         });
         dispatch(logOutSuccess());
@@ -48,7 +48,7 @@ export const logOut = async(dispatch, id, navigate, accessToken, axiosJWT) => {
 export const getAllUser = async(accessToken, dispatch) => {
     dispatch(getUserStart());
     try{
-        const res = await axios.get('https://server-api-guke.onrender.com/v1/user', {
+        const res = await axios.get('http://localhost:3002/v1/user', {
             headers:{token: `Bearer ${accessToken}`}
         });
         dispatch(getUserSuccess(res.data));

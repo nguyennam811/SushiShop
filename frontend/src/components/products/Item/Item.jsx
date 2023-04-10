@@ -49,7 +49,6 @@ const Item = (props) => {
         <NavLink to={`/products/${props.id}`}>
         <button
                 className="btn btn-primary"
-                onClick={() => addItem(props)}
               >
                 Xem Chi Tiết
               </button>

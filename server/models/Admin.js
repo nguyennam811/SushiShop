@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+mongoose.connect(
+  'mongodb://127.0.0.1:27017/sushi', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, () => {
+    console.log("Connected to mongodb...");
+});
+
 const adminSchema = new mongoose.Schema(
   {
     username: {

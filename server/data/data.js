@@ -1090,17 +1090,7 @@ const products = [
       "count": 200
     }
   },
-  {
-    "title": "StrongBow",
-    "price": 30000,
-    "description": "",
-    "image": "https://res.cloudinary.com/dxttukxhg/image/upload/v1667453746/Food%20Store/Drink/strong_vpvcgu.jpg",
-    "category": "drink",
-    "rating": {
-      "rate": 5,
-      "count": 200
-    }
-  }
+
 ]
 
 

@@ -70,7 +70,7 @@ const SingleProduct = () => {
               <button className="btn btn-primary">Thêm</button>
             </NavLink>
           )}
-          <NavLink to="/cart" className="btn btn-primary ms-2">
+          <NavLink to="/cart" className="btn btn-primary ms-2" onClick={() => addItem(productCurrent)}>
             Mua ngay
           </NavLink>
 
