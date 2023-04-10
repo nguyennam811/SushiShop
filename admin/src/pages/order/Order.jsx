@@ -29,10 +29,11 @@ const Order = () => {
   console.log(products)
 
   return (
-    <div>
+    <div style={{ padding: '20px'}}>
       <table className="table table-light table-hover m-0 table-bordered">
         <thead>
           <tr>
+            <th>#</th>
             <th>User</th>
             <th>Tên</th>
             <th>Số điện thoại</th>
@@ -47,6 +48,7 @@ const Order = () => {
           {products.map((item, index) => {
             return (
               <tr key={index}>
+                <th scope="row">{index + 1} </th>
                 <td>{item.User}</td>
                 <td>{item.fullName}</td>
                 <td>{item.phoneNumber}</td>

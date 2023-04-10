@@ -52,38 +52,51 @@ const Products = () => {
     }
   };
   return (
-    <div>
+    <div class="mt-4" style={{margin: '25px'}}> 
+      <h3 style={{marginBottom: '20px'}}>Danh Mục Sản Phẩm</h3>
       <table className="table table-bordered table-light table-hover m-0">
         <thead>
           <tr>
-            <th>Tên</th>
-            <th>Giá</th>
-            <th>Loại</th>
-            <th>Thao tác</th>
+            <th scope="col">#</th>
+            <th scope="col">Ảnh minh họa</th>
+            <th scope="col">Tên</th>
+            <th scope="col">Giá</th>
+            <th scope="col">Loại</th>
+            <th scope="col">Thao tác</th>
           </tr>
         </thead>
         <tbody>
           {products.map((item, index) => {
             return (
               <tr key={index}>
-                <td>
+                <th scope="row">{index + 1} </th>
+                <td
+                  style={{
+                    width: '150px',
+                    height: '130px',
+                  }}
+                >
                   <img
                     src={item.image}
                     style={{
-                      height: "50px",
-                      width: "50px",
-                      marginRight: "12px",
+                      width: '150px',
+                      height: '130px',
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
                     }}
                     alt={item.title}
                   />
-                  {item.title}
                 </td>
-                <td>₫ {item.price}</td>
+                <td>{item.title}</td>
+                <td>{item.price} ₫</td>
                 <td>{item.category}</td>
                 <td>
-                  <tr className="d-flex justify-content-around">
-                    <td className="btn">
-                      <NavLink to={`/edit/${item._id}`}>Edit</NavLink>
+                  <tr>
+                    <td class="btn btn-success" style={{marginRight: '20px'}}>
+                      <NavLink to={`/edit/${item._id}`}
+                        style={{textDecoration: 'none', color: 'white'}}
+                      >Edit</NavLink>
                     </td>
                     <td
                       className="btn btn-danger"
@@ -99,6 +112,7 @@ const Products = () => {
         </tbody>
       </table>
     </div>
+    
   );
 };
 
