@@ -21,14 +21,14 @@ const Products = () => {
   //     getAllUser(user?.accessToken, dispatch);
   //   }
   // });
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-    if (user?.accessToken) {
-      getAllUser(user?.accessToken, dispatch);
-    }
-  });
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/login");
+  //   }
+  //   if (user?.accessToken) {
+  //     getAllUser(user?.accessToken, dispatch);
+  //   }
+  // });
 
   useEffect(() => {
     const fetchproducts = async () => {

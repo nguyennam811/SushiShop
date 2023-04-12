@@ -61,11 +61,11 @@ const Navbar = () => {
               <NavLink to="/upload" className="btn btn-outline-dark ms-2">
                 Thêm sản phẩm mới
               </NavLink>
-              {/* <button className="btn ms-2 btn-outline-dark">
+              <button className="btn ms-2 btn-outline-dark">
                 {" "}
                 <i class="fa fa-user"></i>
                 <span> {user.username} </span>
-              </button> */}
+              </button>
               {/* <p className="navbar-user">Hi, <span> {user.username}  </span> </p> */}
               <NavLink
                 to="/logout"

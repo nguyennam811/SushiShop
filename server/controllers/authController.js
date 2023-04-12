@@ -1,7 +1,6 @@
-const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const db = require("..");
 
 let refreshTokens = [];
 
@@ -12,16 +11,23 @@ const authController = {
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(req.body.password, salt);
 
-      //Create new user
-      const newUser = await new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: hashed,
-      });
+      const newUser = await db
+        .Connection()
+        .then(async (collections) => {
+          const result = await collections
+            .find((clt) => clt.collectionName === "users")
+            .insertOne({
+              username: req.body.username,
+              email: req.body.email,
+              password: hashed,
+            });
+          return result;
+        })
+        .catch(() => {
+          res.status(500);
+        });
 
-      //Save user to DB
-      const user = await newUser.save();
-      res.status(200).json(user);
+      res.status(200).json(newUser);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -52,7 +58,18 @@ const authController = {
   //LOGIN
   loginUser: async (req, res) => {
     try {
-      const user = await User.findOne({ username: req.body.username });
+      const user = await db
+        .Connection()
+        .then(async (collections) => {
+          const result = await collections
+            .find((clt) => clt.collectionName === "users")
+            .findOne({ username: req.body.username });
+          return result;
+        })
+        .catch(() => {
+          res.status(500);
+        });
+
       if (!user) {
         res.status(404).json("Incorrect username");
       }
@@ -63,21 +80,27 @@ const authController = {
       if (!validPassword) {
         res.status(404).json("Incorrect password");
       }
+
       if (user && validPassword) {
-        //Generate access token
-        const accessToken = authController.generateAccessToken(user);
-        //Generate refresh token
-        const refreshToken = authController.generateRefreshToken(user);
-        refreshTokens.push(refreshToken);
-        //STORE REFRESH TOKEN IN COOKIE
-        res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure:false,
-          path: "/",
-          sameSite: "strict",
-        });
-        const { password, ...others } = user._doc;
-        res.status(200).json({ ...others, accessToken, refreshToken });
+        try {
+          //Generate access token
+          const accessToken = authController.generateAccessToken(user);
+          //Generate refresh token
+          const refreshToken = authController.generateRefreshToken(user);
+          refreshTokens.push(refreshToken);
+          //STORE REFRESH TOKEN IN COOKIE
+          res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: false,
+            path: "/",
+            sameSite: "strict",
+          });
+
+          const { password, ...others } = user;
+          res.status(200).json({ ...others, accessToken, refreshToken });
+        } catch (err) {
+          console.log(err);
+        }
       }
     } catch (err) {
       res.status(500).json(err);
@@ -103,7 +126,7 @@ const authController = {
       refreshTokens.push(newRefreshToken);
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure:false,
+        secure: false,
         path: "/",
         sameSite: "strict",
       });

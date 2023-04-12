@@ -2,79 +2,80 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+const MongoClient = require("mongodb").MongoClient;
 const cookieParser = require("cookie-parser");
-const authRoute = require("./routes/auth");
-const userRoute = require("./routes/user");
-const ImportData = require("./dataImport");
+const ImportData = require("./routes/dataImport");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const adminRoute = require("./routes/admin");
+const morgan = require("morgan");
 
-
-
-
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 
 dotenv.config();
 
-
-
-// Connet mongo user
-// mongoose.connect('mongodb://localhost:27017/sushi', () => {
-//   console.log("Connected to mongodb...");
-// });
-
-
-mongoose.connection.close()
-mongoose.connect(
-  'mongodb://127.0.0.1:27017/sushi', () => {
-    console.log("Connected to mongodb...");
+const PORT = 3002;
+app.listen(PORT, () => {
+  console.log(`Server is running port ${PORT}...`);
 });
+
+const url = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const dbName = "sushi";
+
+exports.Connection = async () => {
+  await client.connect();
+  console.log("Connected successfully to server");
+  const db = client.db(dbName);
+  const collections = db.collections();
+  return collections;
+};
 
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-
+app.use(morgan("dev"));
 
 // import products
 app.use("/api/import", ImportData);
 
-
 //get products
 app.use("/api/products", productRoutes);
 
-
-//get orders
+// //get orders
 app.use("/api/orders", orderRoutes);
 
-// get blog
-
-
-
 //ROUTES
+// app.use("/v1/auth", authRoute);
+// app.use("/v1/user", userRoute);//ROUTES
 app.use("/v1/auth", authRoute);
 app.use("/v1/user", userRoute);
 
-
-// Admin
+// // Admin
 app.use("/admin/auth", adminRoute);
 
-
-// Delete product
+// // Delete product
 app.use("/api/delete", productRoutes);
 
-//update
-app.use("/api/update", productRoutes)
+// //update
+app.use("/api/update", productRoutes);
 
-
-const PORT = 3002
-app.listen(PORT, () => {
-  console.log(`Server is running port ${PORT}...`);
-});
-
-process.on('exit', function () {
-  console.log('About to exit.');
-});
-
-
+// app.get("/", async (req, res) => {
+//   const dt = await Connection()
+//     .then(async (collections) => {
+//       const result = await collections
+//         .find((clt) => clt.collectionName === "products")
+//         .find({})
+//         .toArray();
+//       return result;
+//       res.send(result);
+//     })
+//     .catch(console.error)
+//     .finally(() => client.close());
+//   res.send(dt);
+// });

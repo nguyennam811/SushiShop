@@ -19,7 +19,7 @@ const SingleProduct = () => {
   useEffect(() => {
     const fetchproduct = async () => {
       const { data } = await axios.get(
-        `https://server-api-guke.onrender.com/api/products/${id}`
+        `http://localhost:3002/api/products/${id}`
       );
       setProduct(data);
       setIdProduct(data._id);

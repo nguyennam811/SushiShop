@@ -1,12 +1,13 @@
-const User = require("../models/User");
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const db = require("..");
 
 const userController = {
   //GET ALL USER
   getAllUsers: async (req, res) => {
     try {
-      const user = await User.find();
-      res.status(200).json(user);
+      const users = await db.collection("users").find().toArray();
+      res.status(200).json(users);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -15,8 +16,12 @@ const userController = {
   //DELETE A USER
   deleteUser: async (req, res) => {
     try {
-      await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("User deleted");
+      const result = await db.collection("users").deleteOne({ _id: ObjectId(req.params.id) });
+      if (result.deletedCount === 1) {
+        res.status(200).json({ message: "User deleted" });
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
     } catch (err) {
       res.status(500).json(err);
     }

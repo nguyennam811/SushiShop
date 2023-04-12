@@ -24,15 +24,15 @@ const Edit = () => {
   //     }
   //   });
 
-  const user = useSelector((state) => state.auth.login?.currentUser);
-    useEffect(() => {
-      if (!user) {
-        navigate("/login");
-      }
-      if (user?.accessToken) {
-        getAllUser(user?.accessToken, dispatch);
-      }
-    });
+  // const user = useSelector((state) => state.auth.login?.currentUser);
+  //   useEffect(() => {
+  //     if (!user) {
+  //       navigate("/login");
+  //     }
+  //     if (user?.accessToken) {
+  //       getAllUser(user?.accessToken, dispatch);
+  //     }
+  //   });
 
   useEffect(() => {
     const fetchproducts = async () => {
@@ -45,6 +45,7 @@ const Edit = () => {
   }, [id]);
 
   const updateProduct = (_id) => async () => {
+    
     try {
       await axios.put(
         `http://localhost:3002/api/update/${_id}`,
@@ -58,7 +59,7 @@ const Edit = () => {
         timer: 900,
       });
       navigate("/product");
-      setTimeout(() => window.location.reload(false), 1000);
+      // setTimeout(() => window.location.reload(false), 1000);
     } catch {
       swal({
         title: "Thất bại!",
@@ -66,13 +67,13 @@ const Edit = () => {
         button: false,
       });
     }
+    console.log('object')
   };
 
   const handleChange = (e) => {
     setProducts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  console.log(products);
   return (
     <div>
       <div class="mb-3 col-md-5 mx-auto">

@@ -19,18 +19,18 @@ const Order = () => {
   //     getAllUser(user?.accessToken, dispatch);
   //   }
   // });
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-    if (user?.accessToken) {
-      getAllUser(user?.accessToken, dispatch);
-    }
-  });
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/login");
+  //   }
+  //   if (user?.accessToken) {
+  //     getAllUser(user?.accessToken, dispatch);
+  //   }
+  // });
 
   useEffect(() => {
       const fetchproducts = async() => {
-          const {data} = await axios.get("https://server-api-guke.onrender.com/api/orders")
+          const {data} = await axios.get("http://localhost:3002/api/orders")
           setProducts(data);
       }
       fetchproducts();

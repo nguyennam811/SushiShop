@@ -11,7 +11,7 @@ const Products = () => {
   useEffect(() => {
     const fetchproducts = async () => {
       const { data } = await axios.get(
-        "https://server-api-guke.onrender.com/api/products"
+        "http://localhost:3002/api/products"
       );
       setProducts(data);
       setLoading(false);

@@ -1,74 +1,90 @@
 const express = require("express");
 const asyncHandler = require('express-async-handler');
-const Product = require("../models/Product");
-
+const db = require('..');
+const { ObjectId } = require("mongodb");
 const productRoutes = require("express").Router();
 
 
 
 
-
 // All Products
-productRoutes.get("/", asyncHandler (
-    async(req, res) => {
-        const products = await Product.find({});
-        res.json(products);
+productRoutes.get("/", asyncHandler(
+    async (req, res) => {
+        db.Connection()
+            .then(async (collections) => {
+                const result = await collections.find((clt) => clt.collectionName === 'products').find({}).toArray();
+                res.json(result);
+            })
+            .catch(() => {
+                res.status(500)
+            })
     }
 ))
 
 // Single Products
-
-productRoutes.get("/:id", asyncHandler (
-    async(req, res) => {
-        const product = await Product.findById(req.params.id);
-        if(product){
-            res.json(product);
-        }
-        else{
-            res.status(404);
-            throw new Error("Product Not Found")
-        }
-    }
-))
-
-
-
-
-productRoutes.delete("/:id", asyncHandler (
-    async(req, res) => {
-        const product = await Product.findByIdAndDelete(req.params.id);
-        if(product){
-            res.json("done");
-        }
-        else{
-            res.status(404);
-            throw new Error("Product Not Found")
-        }
+productRoutes.get("/:id", asyncHandler(
+    async (req, res) => {
+        db.Connection()
+            .then(async (collections) => {
+                const result = await collections.find((clt) => clt.collectionName === 'products').findOne({ _id: new ObjectId(req.params.id) });
+                console.log(result);
+                res.json(result);
+            })
+            .catch(() => {
+                res.status(500)
+            })
     }
 ))
 
 productRoutes.put("/:id", asyncHandler(
-    async(req, res) => {
-        const product = await Product.findByIdAndUpdate({_id:   req.params.id},{
-            title: req.body.title,
-            category: req.body.category,
-            description: req.body.description,
-            price: req.body.price
-        })
-        if(product){
-            res.json(product);
-        }
-        else{
-            res.status(404);
-            throw new Error("Product Not Found")
-        }
+    async (req, res) => {
+        db.Connection()
+            .then(async (collections) => {
+                const result = await collections.find((clt) => clt.collectionName === 'products').findOneAndUpdate({ _id: new ObjectId(req.params.id) }, {
+                    title: req.body.title,
+                    category: req.body.category,
+                    description: req.body.description,
+                    price: req.body.price
+                });
+                res.json(result);
+            })
+            .catch(() => {
+                res.status(500)
+            })
     }
 ))
 
+productRoutes.delete("/:id", asyncHandler(
+    async (req, res) => {
+        db.Connection()
+            .then(async (collections) => {
+                const result = await collections.find((clt) => clt.collectionName === 'products').findOneAndDelete({ _id: new ObjectId(req.params.id) });
+                console.log(result);
+                res.json(result);
+            })
+            .catch(() => {
+                res.status(500)
+            })
+    }
+))
 
-
-
-
-
+// productRoutes.put("update/:id", asyncHandler(
+//     async (req, res) => {
+//         db.Connection()
+//             .then(async (collections) => {
+//                 const result = await collections.find((clt) => clt.collectionName === 'products').findOneAndUpdate({ _id: new ObjectId(req.params.id) }, {
+//                     title: req.body.title,
+//                     category: req.body.category,
+//                     description: req.body.description,
+//                     price: req.body.price
+//                 });
+//                 res.json(result);
+//             })
+//             .catch(() => {
+//                 res.status(500)
+//             })
+//     }
+    
+// ))
 
 module.exports = productRoutes;

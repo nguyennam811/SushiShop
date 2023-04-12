@@ -7,12 +7,19 @@ const Item = (props) => {
   const { addItem } = useCart();
   // console.log(user, user.accessToken)
 
-  const [userCurrent, setUserCurrent] = useState([]);
+  // const [userCurrent, setUserCurrent] = useState([]);
 
   //   const user = useSelector((state) => state.auth.login.currentUser);
   //   useEffect(() => {
   //     setUserCurrent(user);
   //   }, [user]);
+
+  const [userCurrent, setUserCurrent] = useState([]);
+
+    const user = useSelector((state) => state.auth.login.currentUser);
+    useEffect(() => {
+      setUserCurrent(user);
+    }, [user]);
 
   return (
     <div
@@ -45,30 +52,27 @@ const Item = (props) => {
               justifyContent: "space-between",
             }}
           >
+            <NavLink to={`/products/${props.id}`}>
+              <button className="btn btn-primary">Xem Chi Tiết</button>
+            </NavLink>
 
-        <NavLink to={`/products/${props.id}`}>
-        <button
-                className="btn btn-primary"
-              >
-                Xem Chi Tiết
-              </button>
-        </NavLink>
-            
+            {/* <button className="btn btn-primary" onClick={() => addItem(props)}>
+              Thêm
+            </button> */}
+
+            {userCurrent && (
             <button className="btn btn-primary" onClick={() => addItem(props)}>
               Thêm
             </button>
-          </div>
-
-          {/* {userCurrent && (
-            <button className="btn btn-primary" onClick={() => addItem(props)}>
-              Thêm
-            </button>
-          )} */}
-          {/* {!userCurrent && (
+          )}
+          {!userCurrent && (
             <NavLink >
               <button className="btn btn-primary">Thêm</button>
             </NavLink>
-          )} */}
+          )}
+          </div>
+
+          
         </div>
       </div>
     </div>

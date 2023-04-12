@@ -14,14 +14,20 @@ import swal from 'sweetalert';
 
 const Checkout = () => {
   // const user = useSelector((state) => state.auth.login?.currentUser);
+  const user = useSelector((state) => state.auth.login?.currentUser);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { totalUniqueItems, items, cartTotal, emptyCart } = useCart();
   // eslint-disable-next-line
   const [total, setTotal] = useState(cartTotal)
+
   // const getUser = useSelector(
   //   (state) => state.auth.login?.currentUser.username
   // );
+  const getUser = useSelector(
+    (state) => state.auth.login?.currentUser.username
+  );
 
   const arrayProduct = items.map((product) => ({
     productId: product.id,
@@ -40,7 +46,7 @@ const Checkout = () => {
       city: "",
       address: "",
       district: "",
-      // User: getUser,
+      User: getUser,
       notes: "",
       listProducts: arrayProduct,
       total: total
@@ -58,7 +64,7 @@ const Checkout = () => {
     onSubmit: async (values) => {
       
       try {
-        await axios.post('https://server-api-guke.onrender.com/api/import/order', values);
+        await axios.post('http://localhost:3002/api/import/order', values);
         swal({
           title: "Đặt hàng thành công!",
           icon: "success",
@@ -88,7 +94,6 @@ const Checkout = () => {
   //   }
   // });
 
-  //
 
 
   

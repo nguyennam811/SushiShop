@@ -1,7 +1,6 @@
-const Admin = require("../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const db = require('..')
 
 let refreshTokens = [];
 
@@ -13,15 +12,20 @@ const adminController = {
       const hashed = await bcrypt.hash(req.body.password, salt);
 
       //Create new user
-      const newAdmin = await new Admin({
-        username: req.body.username,
-        email: req.body.email,
-        password: hashed,
-      });
+      const newAdmin = await db.Connection()
+        .then(async (collections) => {
+          const result = await collections.find((clt) => clt.collectionName === 'admins').insertOne({
+            username: req.body.username,
+            email: req.body.email,
+            password: hashed,  
+          });
+          return result
+        })
+        .catch(() => {
+          res.status(500)
+        })
 
-      //Save user to DB
-      const admin = await newAdmin.save();
-      res.status(200).json(admin);
+      res.status(200).json(newAdmin);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -52,7 +56,14 @@ const adminController = {
   //LOGIN
   loginAdmin: async (req, res) => {
     try {
-      const admin = await Admin.findOne({ username: req.body.username });
+      const admin = await db.Connection()
+        .then(async (collections) => {
+          const result = await collections.find((clt) => clt.collectionName === 'admins').findOne({ username: req.body.username });
+          return result
+        })
+        .catch(() => {
+          res.status(500)
+        })
       if (!admin) {
         res.status(404).json("Incorrect username");
       }
@@ -64,20 +75,25 @@ const adminController = {
         res.status(404).json("Incorrect password");
       }
       if (admin && validPassword) {
-        //Generate access token
-        const accessToken = adminController.generateAccessToken(admin);
-        //Generate refresh token
-        const refreshToken = adminController.generateRefreshToken(admin);
-        refreshTokens.push(refreshToken);
-        //STORE REFRESH TOKEN IN COOKIE
-        res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure:false,
-          path: "/",
-          sameSite: "strict",
-        });
-        const { password, ...others } = admin._doc;
-        res.status(200).json({ ...others, accessToken, refreshToken });
+        try {
+          //Generate access token
+          const accessToken = adminController.generateAccessToken(admin);
+          //Generate refresh token
+          const refreshToken = adminController.generateRefreshToken(admin);
+          refreshTokens.push(refreshToken);
+          //STORE REFRESH TOKEN IN COOKIE
+          res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: false,
+            path: "/",
+            sameSite: "strict",
+          });
+          const { password, ...others } = admin;
+          res.status(200).json({ ...others, accessToken, refreshToken });
+        } catch (e) {
+          console.log(e);
+        }
+
       }
     } catch (err) {
       res.status(500).json(err);
@@ -103,7 +119,7 @@ const adminController = {
       refreshTokens.push(newRefreshToken);
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure:false,
+        secure: false,
         path: "/",
         sameSite: "strict",
       });

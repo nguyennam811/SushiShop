@@ -19,14 +19,14 @@ const Upload = () => {
   //     getAllUser(user?.accessToken, dispatch);
   //   }
   // });
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-    if (user?.accessToken) {
-      getAllUser(user?.accessToken, dispatch);
-    }
-  });
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/login");
+  //   }
+  //   if (user?.accessToken) {
+  //     getAllUser(user?.accessToken, dispatch);
+  //   }
+  // });
 
   const [image, setImage] = useState({});
   console.log(image.url);

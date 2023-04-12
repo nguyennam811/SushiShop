@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const db = require('..')
+
 
 const verifyToken = (req, res, next) => {
   //ACCESS TOKEN FROM HEADER, REFRESH TOKEN FROM COOKIE
