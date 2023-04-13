@@ -47,13 +47,13 @@ const Navbar = () => {
               >
                 <ul className="navbar-nav  mb-2 fw-bolder d-flex justify-content-around">
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/order">
+                    <NavLink className="btn btn-outline-dark ms-2" to="/order">
                       Yêu cầu
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/product">
-                      Sản phẩm
+                    <NavLink to="/product" className="btn btn-outline-dark ms-2">
+                    Sản phẩm
                     </NavLink>
                   </li>
                 </ul>
@@ -73,8 +73,11 @@ const Navbar = () => {
                 style={{ textDecoration: "none" }}
                 onClick={handleLogout}
               >
-                {" "}
-                Log out
+                <button className="btn ms-2 btn-outline-dark">
+                  {" "}
+                  <i className="fa fa-sign-out me-1"></i>
+                  <span> Log out </span>
+                </button>
               </NavLink>
             </>
           ) : (

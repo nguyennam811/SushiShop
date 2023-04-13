@@ -85,23 +85,5 @@ productRoutes.delete(
   })
 );
 
-// productRoutes.put("update/:id", asyncHandler(
-//     async (req, res) => {
-//         db.Connection()
-//             .then(async (collections) => {
-//                 const result = await collections.find((clt) => clt.collectionName === 'products').findOneAndUpdate({ _id: new ObjectId(req.params.id) }, {
-//                     title: req.body.title,
-//                     category: req.body.category,
-//                     description: req.body.description,
-//                     price: req.body.price
-//                 });
-//                 res.json(result);
-//             })
-//             .catch(() => {
-//                 res.status(500)
-//             })
-//     }
-
-// ))
 
 module.exports = productRoutes;

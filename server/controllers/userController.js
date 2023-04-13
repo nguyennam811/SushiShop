@@ -5,12 +5,23 @@ const db = require("..");
 const userController = {
   //GET ALL USER
   getAllUsers: async (req, res) => {
-    try {
-      const users = await db.collection("users").find().toArray();
-      res.status(200).json(users);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+    // try {
+    //   const users = await db.collection("users").find().toArray();
+    //   res.status(200).json(users);
+    // } catch (err) {
+    //   res.status(500).json(err);
+    // }
+    db.Connection()
+      .then(async (collections) => {
+        const result = await collections
+          .find((clt) => clt.collectionName === "users")
+          .find({})
+          .toArray();
+        res.json(result);
+      })
+      .catch(() => {
+        res.status(500);
+      });
   },
 
   //DELETE A USER

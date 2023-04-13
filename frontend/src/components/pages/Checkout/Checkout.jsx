@@ -266,7 +266,7 @@ const Checkout = () => {
               ></textarea>
             </div>
             <hr className="mb-4" />
-            <button className="btn btn-primary btn-lg btn-block" type="submit" onClick={formik.handleSubmit}>
+            <button className="btn btn-primary btn-lg btn-block" type="submit" onClick={formik.handleSubmit} style={{marginBottom: "50px"}}>
               Đặt Hàng
             </button>
           </div>

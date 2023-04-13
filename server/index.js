@@ -13,6 +13,8 @@ const morgan = require("morgan");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 
+const products = require("./data/data");
+
 dotenv.config();
 
 const PORT = 3002;
@@ -28,12 +30,45 @@ const client = new MongoClient(url, {
 const dbName = "sushi";
 
 exports.Connection = async () => {
+
   await client.connect();
   console.log("Connected successfully to server");
   const db = client.db(dbName);
   const collections = db.collections();
   return collections;
 };
+
+// const PORT = process.env.PORT || 3002;
+// const dbName = 'sushi';
+// let db;
+ 
+// function connect() {}
+
+// const connectDb = async () => {
+//     const client = new MongoClient("mongodb://127.0.0.1:27017", {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true,
+//     });
+//     console.log('object')
+//     try {
+//         await client.connect();
+//         app.listen(PORT, () => console.log(`server port: ${PORT}`));
+//         db = client.db(dbName);
+
+//         //ADD DATA ONE TIME
+//         db.collection('products').insertMany(products);
+//         // db.collection('
+//     } catch (err) {
+//           console.log(err);
+//       // }
+//       //   // await client.connect();
+//       //   // console.log("Connected successfully to server");
+//       //   // const db = client.db(dbName);
+//       //   // const collections = db.collections();
+//       //   // return collections;
+//       };
+//     }
+//     connectDb();
 
 app.use(cors());
 app.use(cookieParser());

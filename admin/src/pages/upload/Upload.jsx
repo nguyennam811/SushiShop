@@ -66,6 +66,7 @@ const Upload = () => {
         "http://localhost:3002/api/import/singleproduct",
         dataPush
       );
+      navigate("/product");
       swal({
         title: "Thành công!",
         icon: "success",

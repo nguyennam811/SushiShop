@@ -59,7 +59,7 @@ const Cart = () => {
                       />
                     </td>
                     <td>{item.title}</td>
-                    <td>₫ {item.price}</td>
+                    <td>{item.price} đ</td>
                     <td>{item.quantity}</td>
                     <td>
                       <button
@@ -91,8 +91,8 @@ const Cart = () => {
             </tbody>
           </table>
         </div>
-        <div className="col-auto ms-auto">
-          <h2>Tổng thanh toán: ₫{cartTotal.toLocaleString()}</h2>
+        <div className="col-auto ms-auto" style={{marginTop: "10px"}}>
+          <h2>Tổng thanh toán: {cartTotal.toLocaleString()} đ</h2>
         </div>
         <div className="col-auto">
           <button className="btn btn-danger m-2" onClick={() => emptyCart()}>

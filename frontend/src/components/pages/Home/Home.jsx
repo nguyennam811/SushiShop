@@ -5,6 +5,7 @@ import dish3 from "../../../images/dish3.png";
 import cv from "../../../images/cv.png";
 import "./home.css";
 import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -21,15 +22,15 @@ const Home = () => {
     // </div>
     <div>
       <div className="head">
-        <p className="title-here">Title here</p>
+        <p className="title-here">Title Here</p>
         <p className="detail-content">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vivamus
           lacinia odio vitae vestibulum vestibulum.
         </p>
         <button className="button-order">
-          <Link to="/ProductCart" style={{ color: "white" }}>
+          <NavLink to="/products" style={{ color: "white", textDecoration: 'none' }}>
             Order now
-          </Link>
+          </NavLink>
         </button>
       </div>
       <div className="popular-menu">
@@ -76,9 +77,9 @@ const Home = () => {
             nihil?
           </div>
           <button className="button-order">
-            <Link to="/ProductCart" style={{ color: "white" }}>
+            <NavLink to="/products" style={{ color: "white", textDecoration: 'none' }}>
               Order now
-            </Link>
+            </NavLink>
           </button>
         </div>
       </div>
@@ -103,9 +104,9 @@ const Home = () => {
             nihil?
           </div>
           <button className="button-order">
-            <Link to="/ProductCart" style={{ color: "white" }}>
+            <NavLink to="/products" style={{ color: "white", textDecoration: 'none' }}>
               Order now
-            </Link>
+            </NavLink>
           </button>
         </div>
         <div className="dish1">
