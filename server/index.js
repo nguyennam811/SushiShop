@@ -51,8 +51,6 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
 //ROUTES
-// app.use("/v1/auth", authRoute);
-// app.use("/v1/user", userRoute);//ROUTES
 app.use("/v1/auth", authRoute);
 app.use("/v1/user", userRoute);
 

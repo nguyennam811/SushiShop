@@ -14,26 +14,6 @@ const Edit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const user = useSelector((state) => state.auth.login?.currentUser);
-  //   useEffect(() => {
-  //     if (!user) {
-  //       navigate("/login");
-  //     }
-  //     if (user?.accessToken) {
-  //       getAllUser(user?.accessToken, dispatch);
-  //     }
-  //   });
-
-  // const user = useSelector((state) => state.auth.login?.currentUser);
-  //   useEffect(() => {
-  //     if (!user) {
-  //       navigate("/login");
-  //     }
-  //     if (user?.accessToken) {
-  //       getAllUser(user?.accessToken, dispatch);
-  //     }
-  //   });
-
   useEffect(() => {
     const fetchproducts = async () => {
       const { data } = await axios.get(
@@ -45,12 +25,9 @@ const Edit = () => {
   }, [id]);
 
   const updateProduct = (_id) => async () => {
-    
+    console.log(products);
     try {
-      await axios.put(
-        `http://localhost:3002/api/update/${_id}`,
-        products
-      );
+      await axios.put(`http://localhost:3002/api/update/${_id}`, products);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -59,7 +36,7 @@ const Edit = () => {
         timer: 900,
       });
       navigate("/product");
-      // setTimeout(() => window.location.reload(false), 1000);
+      setTimeout(() => window.location.reload(false), 1000);
     } catch {
       swal({
         title: "Thất bại!",
@@ -67,7 +44,6 @@ const Edit = () => {
         button: false,
       });
     }
-    console.log('object')
   };
 
   const handleChange = (e) => {
@@ -135,7 +111,13 @@ const Edit = () => {
         />
       </div>
       <div class="mb-3 col-md-1 mx-auto">
-        <button type="button" class="btn btn-outline-dark" onClick={updateProduct(products._id)}>Lưu Sản Phẩm</button>
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          onClick={updateProduct(products._id)}
+        >
+          Lưu Sản Phẩm
+        </button>
       </div>
     </div>
   );
