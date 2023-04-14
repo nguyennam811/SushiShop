@@ -27,7 +27,9 @@ const userController = {
   //DELETE A USER
   deleteUser: async (req, res) => {
     try {
-      const result = await db.collection("users").deleteOne({ _id: ObjectId(req.params.id) });
+      const result = await db
+        .collection("users")
+        .deleteOne({ _id: ObjectId(req.params.id) });
       if (result.deletedCount === 1) {
         res.status(200).json({ message: "User deleted" });
       } else {
@@ -38,5 +40,21 @@ const userController = {
     }
   },
 };
+// deleteUser: asyncHandler(async (req, res) => {
+//   db.Connection()
+//     .then(async (collections) => {
+//       const result = await collections
+//         .find((clt) => clt.collectionName === "users")
+//         .findOneAndDelete({ _id: new ObjectId(req.params.id) });
+//       console.log(result);
+//       res.json(result);
+//     })
+//     .catch(() => {
+//       res.status(500);
+//     });
+// })
+// }
+
+
 
 module.exports = userController;

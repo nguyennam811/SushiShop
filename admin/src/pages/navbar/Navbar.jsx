@@ -20,7 +20,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
-
+import PersonIcon from '@mui/icons-material/Person';
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../redux/apiRequest";
@@ -99,6 +99,18 @@ const Navbar = () => {
                           <DashboardIcon />
                         </ListItemIcon>
                         {!collapsed && <ListItemText primary="Dashboard" />}
+                      </ListItemButton>
+                    </Link>
+
+                    <Link to="/user">
+                      <ListItemButton
+                        selected={selectedItem === "user"} // check if this is the selected item
+                        onClick={() => handleItemClick("user")}
+                      >
+                        <ListItemIcon>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        {!collapsed && <ListItemText primary="User" />}
                       </ListItemButton>
                     </Link>
 

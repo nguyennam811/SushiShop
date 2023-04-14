@@ -33,6 +33,7 @@ import { Routes, Route, Link } from 'react-router-dom'
 
 import Order from "../pages/order/Order";
 import Contact from "../pages/contact/Contact";
+import User from "../pages/user/User";
 import Products from "../pages/products/Products";
 import Upload from '../pages/upload/Upload';
 import Edit from "../pages/edit/Edit";
@@ -44,6 +45,7 @@ function Router() {
           <Route path="/product" element = { <Products />} />
           <Route path='/order' element = { <Order />} />
           <Route path='/contact' element = { <Contact />} />
+          <Route path='/user' element = { <User />} />
           <Route path='/upload' element = { <Upload />} />
           <Route path='/edit/:id' element = { <Edit />} />
         </Routes>

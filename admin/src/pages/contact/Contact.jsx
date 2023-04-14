@@ -36,6 +36,11 @@ const Order = () => {
       fetchproducts();
   }, []);
 
+  const [confirmedRows, setConfirmedRows] = useState([]);
+const [canceledRows, setCanceledRows] = useState([]);
+const [isCancelClicked, setIsCancelClicked] = useState(false);
+
+
   return (
     <div >
       <table className="table table-light table-hover m-0 table-bordered">
@@ -49,7 +54,7 @@ const Order = () => {
             <th>Trạng thái</th>
           </tr>
         </thead>
-        <tbody>
+        {/* <tbody>
           {contact.map((item, index) => {
             return (
               <tr key={index}>
@@ -69,7 +74,54 @@ const Order = () => {
               </tr>
             );
           })}
-        </tbody>
+        </tbody> */}
+        <tbody>
+  {contact.map((item, index) => {
+    const isConfirmed = confirmedRows.includes(index);
+    const isCanceled = canceledRows.includes(index);
+    const isButtonDisabled = isConfirmed || isCanceled;
+    const buttonClassNames = "btn " + (isConfirmed ? "btn-success" : "btn-primary");
+    const cancelButtonClassNames = "btn " + (isCanceled ? "btn-danger" : "btn-warning");
+    return (
+      <tr key={index}>
+        <th scope="row">{index + 1} </th>
+        <td>{item.fullName}</td>
+        <td>{item.phoneNumber}</td>
+        <td>{item.email}</td>
+        <td>{item.notes}</td>
+        <td>
+          {isCanceled ? (
+            <button type="button" class="btn btn-danger">Đã hủy</button>
+          ) : (
+            <div className="d-flex justify-content-around">
+              <button
+                className={buttonClassNames}
+                onClick={() => {
+                  setConfirmedRows([...confirmedRows, index]);
+                  setIsCancelClicked(false);
+                }}
+                disabled={isButtonDisabled}
+              >
+                Xác nhận
+              </button>
+              <button
+                className={cancelButtonClassNames}
+                onClick={() => {
+                  setCanceledRows([...canceledRows, index]);
+                  setIsCancelClicked(true);
+                }}
+                disabled={isButtonDisabled}
+              >
+                Hủy
+              </button>
+            </div>
+          )}
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
+
       </table>
     </div>
   );
