@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const ImportData = require("./routes/dataImport");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const adminRoute = require("./routes/admin");
 const morgan = require("morgan");
 
@@ -84,6 +85,9 @@ app.use("/api/products", productRoutes);
 
 // //get orders
 app.use("/api/orders", orderRoutes);
+
+// //get contacts
+app.use("/api/contacts", contactRoutes);
 
 //ROUTES
 app.use("/v1/auth", authRoute);

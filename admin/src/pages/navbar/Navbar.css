@@ -1,0 +1,28 @@
+.menu {
+  font-size: 15px;
+}
+
+.ant-layout {
+  min-width: 100vh;
+}
+
+.ant-layout-header span.trigger svg {
+  width: 25px !important;
+  height: 25px !important;
+  margin: 10px !important;
+}
+.logo {
+  font-size: 35px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  padding: 49px;
+}
+a {
+  text-decoration: none;
+}
+.logoOut {
+  font-size: 35px;
+  padding: 49px;
+  padding-top: 0;
+}

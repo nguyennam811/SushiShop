@@ -84,35 +84,38 @@ const Upload = () => {
   };
 
   return (
-    <div>
+    <div style={{marginTop: '30px'}}>
       <div class="mb-3 col-md-5 mx-auto">
-        <label for="text">Tên sản phẩm</label>
+        <label for="text" style={{fontSize: '20px', marginTop:'10px'}}>Tên sản phẩm</label>
         <input
           type="text"
           class="form-control"
           id="title"
           name="title"
+          style={{marginTop:'10px'}}
           placeholder=""
           onChange={handleChange}
         />
       </div>
       <div class="mb-3 col-md-5 mx-auto">
-        <label for="number">giá</label>
+        <label for="number" style={{fontSize: '20px', marginTop:'10px'}}>Giá</label>
         <input
           type="number"
           class="form-control"
           id="price"
           name="price"
+          style={{marginTop:'10px'}}
           placeholder=""
           onChange={handleChange}
         />
       </div>
       <div class="mb-3 col-md-5 mx-auto">
-        <label for="text">Loại</label>
+        <label for="text"  style={{fontSize: '20px', marginTop:'10px'}}>Loại</label>
         <select
           class="custom-select d-block w-100"
           id="category"
           name="category"
+          style={{marginTop:'10px'}}
           required=""
           onChange={handleChange}
         >
@@ -128,14 +131,15 @@ const Upload = () => {
           <option>Chirashi sushi</option>
         </select>
       </div>
-      <div class="mb-3 col-md-5 mx-auto">
-        <label for="text">Mô tả</label>
+      <div class="mb-3 col-md-5 mx-auto" >
+        <label for="text" style={{fontSize: '20px', marginTop:'10px'}}>Mô tả</label>
         <textarea
           type="text"
           class="form-control"
           id="description"
           name="description"
           placeholder=""
+          style={{marginTop:'10px'}}
           onChange={handleChange}
         />
       </div>

@@ -1,3 +1,4 @@
+
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -8,7 +9,66 @@ import swal from "sweetalert";
 import Swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
 
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
+
+
 const Products = () => {
+
+  const columns = [
+    { field: '_id', headerName: '_id', width: 80, },
+    {
+      field: 'image',
+      headerName: 'Ảnh minh họa',
+      width: 170,
+      
+      renderCell: (params) => (
+        <img src={params.value} alt={params.row.title} style={{ width: 130 }} />
+      ),
+    },
+    {
+      field: 'title',
+      headerName: 'Tên sản phẩm',
+      width: 250,
+           
+    },
+    {
+      field: 'price',
+      headerName: 'Giá',
+      width: 140,
+           
+    },
+    {
+      field: 'category',
+      headerName: 'Loại',
+      
+      width: 160,
+    },
+    {
+      field: 'thao tác',
+      headerName: 'Thao tác',
+      width: 260,
+      renderCell: (params) => (
+        <>
+          <NavLink to={`/edit/${params.row._id}`}
+            className="btn btn-success"
+            style={{marginRight: '20px', textDecoration: 'none', color: 'white'}}
+          >
+            Edit
+          </NavLink>
+          <button
+            className="btn btn-danger"
+            onClick={deleteProduct(params.row._id)}
+          >
+            Delete
+          </button>
+        </>
+      ),
+      
+    },
+  ];
+
+  
   const [products, setProducts] = useState([]);
   const user = useSelector((state) => state.auth.login?.currentUser);
   const dispatch = useDispatch();
@@ -40,6 +100,8 @@ const Products = () => {
     fetchproducts();
   }, []);
 
+  console.log(products)
+
   const deleteProduct = (id) => async () => {
     try {
       await axios.delete(
@@ -61,66 +123,25 @@ const Products = () => {
     }
   };
   return (
-    <div class="mt-4" style={{margin: '25px'}}> 
-      <h3 style={{marginBottom: '20px'}}>Danh Mục Sản Phẩm</h3>
-      <table className="table table-bordered table-light table-hover m-0">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Ảnh minh họa</th>
-            <th scope="col">Tên</th>
-            <th scope="col">Giá</th>
-            <th scope="col">Loại</th>
-            <th scope="col">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((item, index) => {
-            return (
-              <tr key={index}>
-                <th scope="row">{index + 1} </th>
-                <td
-                  style={{
-                    width: '150px',
-                    height: '130px',
-                  }}
-                >
-                  <img
-                    src={item.image}
-                    style={{
-                      width: '150px',
-                      height: '130px',
-                      display: 'block',
-                      marginLeft: 'auto',
-                      marginRight: 'auto',
-                    }}
-                    alt={item.title}
-                  />
-                </td>
-                <td>{item.title}</td>
-                <td>{item.price} ₫</td>
-                <td>{item.category}</td>
-                <td>
-                  <tr>
-                    <td class="btn btn-success" style={{marginRight: '20px'}}>
-                      <NavLink to={`/edit/${item._id}`}
-                        style={{textDecoration: 'none', color: 'white'}}
-                      >Edit</NavLink>
-                    </td>
-                    <td
-                      className="btn btn-danger"
-                      onClick={deleteProduct(item._id)}
-                    >
-                      Xoá
-                    </td>
-                  </tr>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    
+    <Box sx={{ height: 625, width: "100%" }}>
+      <DataGrid
+      rows={products}
+      getRowId={(products) => products?._id}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        getRowHeight={() => 105}
+      />
+    </Box>
     
   );
 };

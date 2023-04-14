@@ -16,10 +16,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/login' element = { <Login />} />
-          <Route path="/product" element = { <Products />} />
+          {/* <Route path="/product" element = { <Products />} />
           <Route path='/order' element = { <Order />} />
           <Route path='/upload' element = { <Upload />} />
-          <Route path='/edit/:id' element = { <Edit />} />
+          <Route path='/edit/:id' element = { <Edit />} /> */}
         </Routes>
    
     </Router>

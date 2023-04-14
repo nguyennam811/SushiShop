@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllUser } from "../../redux/apiRequest";
 
 const Order = () => {
-  const [products, setProducts] = useState([]);
+  const [contact, setContact] = useState([]);
   const user = useSelector((state) => state.auth.login?.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,12 +30,11 @@ const Order = () => {
 
   useEffect(() => {
       const fetchproducts = async() => {
-          const {data} = await axios.get("http://localhost:3002/api/orders")
-          setProducts(data);
+          const {data} = await axios.get("http://localhost:3002/api/contacts")
+          setContact(data);
       }
       fetchproducts();
   }, []);
-  console.log(products)
 
   return (
     <div >
@@ -43,48 +42,24 @@ const Order = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>User</th>
             <th>Tên</th>
             <th>Số điện thoại</th>
-            <th>Địa chỉ</th>
-            <th>Ghi chú</th>
-            <th>Sản phẩm</th>
-            <th>Tổng tiền</th>
+            <th>Email</th>
+            <th>Nội dung</th>
             <th>Trạng thái</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((item, index) => {
+          {contact.map((item, index) => {
             return (
               <tr key={index}>
                 <th scope="row">{index + 1} </th>
-                <td>{item.User}</td>
                 <td>{item.fullName}</td>
                 <td>{item.phoneNumber}</td>
                 <td>
-                  {item.address} {item.district} {item.city}
+                  {item.email}
                 </td>
                 <td>{item.notes}</td>
-                <td>
-                  {item.listProducts &&
-                    item.listProducts.map((data, index) => (
-                      <tr>
-                        <td>
-                          <img
-                            src={data.productImage}
-                            style={{
-                              height: "40px",
-                              width: "40px",
-                              marginRight: "20px",
-                            }}
-                            alt={data.title}
-                          />
-                          {data.name} ( {data.qty})
-                        </td>
-                      </tr>
-                    ))}
-                </td>
-                <td>₫ {item.total.toLocaleString()}</td>
                 <td>
                   <tr className="d-flex justify-content-around">
                     <td className="btn btn-primary">Xác nhận </td>

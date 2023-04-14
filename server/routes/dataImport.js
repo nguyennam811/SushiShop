@@ -45,4 +45,18 @@ ImportData.post("/order", (req, res) => {
     });
 });
 
+ImportData.post("/contact", (req, res) => {
+  const ImportData = req.body;
+  Connection.Connection()
+    .then(async (collections) => {
+      const result = await collections
+        .find((clt) => clt.collectionName === "contacts")
+        .insertOne(ImportData);
+      res.json(result);
+    })
+    .catch(() => {
+      res.status(500);
+    });
+});
+
 module.exports = ImportData;
